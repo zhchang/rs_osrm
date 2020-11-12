@@ -226,6 +226,16 @@ impl MatchRequest {
         }
     }
 
+    pub fn radiuses(&mut self, val: &Option<Vec<Option<f64>>>) -> &mut MatchRequest {
+        self.general_options.radiuses(val);
+        self
+    }
+
+    pub fn timestamps(&mut self, val: &Option<Vec<i32>>) -> &mut MatchRequest {
+        self.timestamps = val.clone();
+        self
+    }
+
     pub fn run(&mut self, osrm: &Osrm) -> (Status, MatchResult) {
         unsafe {
             let mut result: *mut CMatchResult = std::ptr::null_mut();

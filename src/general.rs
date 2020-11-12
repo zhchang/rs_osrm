@@ -625,6 +625,11 @@ impl GeneralOptions {
             c_exclude: None,
         }
     }
+
+    pub fn radiuses(&mut self, val: &Option<Vec<Option<f64>>>) -> &mut GeneralOptions {
+        self.radiuses = val.clone();
+        self
+    }
 }
 
 #[repr(C)]
