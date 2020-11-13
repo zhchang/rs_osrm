@@ -28,7 +28,7 @@ extern "C" {
 }
 
 #[repr(C)]
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub(crate) struct CMatchWaypoint {
     hint: *const c_char,
     distance: c_double,
@@ -39,6 +39,7 @@ pub(crate) struct CMatchWaypoint {
     alternatives_count: c_int,
 }
 
+#[derive(Debug)]
 pub struct MatchWaypoint {
     pub hint: Option<String>,
     pub distance: f64,
@@ -64,7 +65,7 @@ impl MatchWaypoint {
 }
 
 #[repr(C)]
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub(crate) struct CMatchRoute {
     pub(crate) duration: c_double,
     pub(crate) distance: c_double,
@@ -76,6 +77,7 @@ pub(crate) struct CMatchRoute {
     pub(crate) confidence: c_double,
 }
 
+#[derive(Debug)]
 pub struct MatchRoute {
     pub duration: f64,
     pub distance: f64,
@@ -257,6 +259,7 @@ impl MatchRequest {
 }
 
 #[repr(C)]
+#[derive(Debug)]
 struct CMatchResult {
     code: *const c_char,
     message: *const c_char,
@@ -266,6 +269,7 @@ struct CMatchResult {
     number_of_routes: c_int,
 }
 
+#[derive(Debug)]
 pub struct MatchResult {
     pub code: Option<String>,
     pub message: Option<String>,
