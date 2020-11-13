@@ -94,37 +94,24 @@ impl MatchRoute {
     //  because if they have some difference then it crash at runtime
     pub(crate) fn new(c_route: &CMatchRoute) -> MatchRoute {
         let mut weight_name: Option<String> = None;
-        println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute");
         if c_route.weight_name != std::ptr::null() {
-            println!(
-                "inside rsc_osrm | MatchRoute::new to convert CMatchRoute | before weight_name {:?}", c_route.weight_name
-            );
             weight_name = Option::from(c_string_to_string(c_route.weight_name));
-            println!(
-                "inside rsc_osrm | MatchRoute::new to convert CMatchRoute | after weight_name"
-            );
         }
 
         let mut geometry: Option<String> = None;
         if c_route.geometry != std::ptr::null() {
-            println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute | before geometry");
             geometry = Option::from(c_string_to_string(c_route.geometry));
-            println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute | after geometry");
         }
 
         let mut legs: Vec<RouteLeg> = Vec::new();
 
         if c_route.legs != std::ptr::null_mut() {
-            println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute | before legs");
             let legs_vec = unsafe {
                 slice::from_raw_parts(c_route.legs, c_route.number_of_legs as usize).to_vec()
             };
-            println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute | after legs from raw parts");
 
             for leg in legs_vec {
-                println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute | before legs to route leg | {:?}", leg );
                 legs.push(leg.to_route_leg());
-                println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute | after legs to route leg ");
             }
         }
 
@@ -262,16 +249,10 @@ impl MatchRequest {
                 &mut CMatchRequest::new(self) as *mut CMatchRequest,
                 result_ptr,
             );
-            println!("inside rsc_osrm: after osrm match: {:?}", &(*result));
 
             let converted_result = MatchResult::new(&(*result));
-            println!(
-                "inside rsc_osrm: after convert result: {:?}",
-                converted_result
-            );
 
             match_result_destroy(result);
-            println!("inside rsc_osrm: after destroy result");
 
             (status, converted_result)
         }
@@ -318,18 +299,11 @@ impl MatchResult {
         let mut waypoints: Vec<Option<MatchWaypoint>> = Vec::new();
         if c_reasult.waypoints != std::ptr::null_mut() {
             let waypoints_vec = unsafe {
-                println!("inside rsc_osrm: before slice::from_raw_parts");
-                let temp = slice::from_raw_parts(
-                    c_reasult.waypoints,
-                    c_reasult.number_of_waypoints as usize,
-                )
-                .to_vec();
-                println!("inside rsc_osrm: after slice::from_raw_parts");
-                temp
+                slice::from_raw_parts(c_reasult.waypoints, c_reasult.number_of_waypoints as usize)
+                    .to_vec()
             };
 
             for waypoint in &waypoints_vec {
-                println!("inside rsc_osrm: before MatchWaypoint::new: {:?}", waypoint);
                 match waypoint.snap_failed {
                     0 => {
                         waypoints.push(Some(MatchWaypoint::new(waypoint)));
@@ -338,35 +312,18 @@ impl MatchResult {
                         waypoints.push(None);
                     }
                 }
-                println!("inside rsc_osrm: after MatchWaypoint::new");
             }
         }
 
-        println!("inside rsc_osrm: before Vec<MatchRoute>::new");
         let mut routes: Vec<MatchRoute> = Vec::new();
         if c_reasult.routes != std::ptr::null_mut() {
             let routes_vec = unsafe {
-                println!(
-                    "inside rsc_osrm: before MatchRoute | slice::from_raw_parts | c_reasult {:?} ",
-                    c_reasult
-                );
-                let temp =
-                    slice::from_raw_parts(c_reasult.routes, c_reasult.number_of_routes as usize)
-                        .to_vec();
-                println!("inside rsc_osrm: after MatchRoute | slice::from_raw_parts");
-                temp
+                slice::from_raw_parts(c_reasult.routes, c_reasult.number_of_routes as usize)
+                    .to_vec()
             };
 
             for route in routes_vec {
-                println!(
-                    "inside rsc_osrm: before MatchRoute::new | route: {:?}",
-                    &route
-                );
                 routes.push(MatchRoute::new(&route));
-                println!(
-                    "inside rsc_osrm: after MatchRoute::new | route: {:?}",
-                    &route
-                );
             }
         }
 
