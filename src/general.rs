@@ -387,7 +387,7 @@ pub struct Annotation {
 }
 
 #[repr(C)]
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub(crate) struct COsrmRouteLeg {
     pub(crate) annotation: *const COsrmAnnotation,
     pub(crate) duration: c_double,
