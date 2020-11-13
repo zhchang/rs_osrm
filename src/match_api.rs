@@ -14,7 +14,7 @@ use crate::Status;
 use core::ffi::c_void;
 use std::os::raw::c_char;
 use std::os::raw::c_double;
-use std::{ffi::CStr, os::raw::c_int, slice};
+use std::{ffi::CStr, os::raw::c_float, os::raw::c_int, slice};
 
 #[link(name = "c_osrm")]
 extern "C" {
@@ -75,7 +75,7 @@ pub(crate) struct CMatchRoute {
     pub(crate) geometry: *const c_char,
     pub(crate) legs: *const COsrmRouteLeg,
     pub(crate) number_of_legs: c_int,
-    pub(crate) confidence: c_double,
+    pub(crate) confidence: c_float,
 }
 
 #[derive(Debug)]
@@ -86,11 +86,12 @@ pub struct MatchRoute {
     pub weight: f64,
     pub geometry: Option<String>,
     pub legs: Vec<RouteLeg>,
-    pub number_of_legs: i32,
-    pub confidence: f64,
+    pub confidence: f32,
 }
 
 impl MatchRoute {
+    // todo: Need a way to use the type defined in c directly or do type check between rust type and c type statically.
+    //  because if they have some difference then it crash at runtime
     pub(crate) fn new(c_route: &CMatchRoute) -> MatchRoute {
         let mut weight_name: Option<String> = None;
         println!("inside rsc_osrm | MatchRoute::new to convert CMatchRoute");
@@ -133,8 +134,7 @@ impl MatchRoute {
             weight_name,
             weight: c_route.weight,
             geometry,
-            legs: legs,
-            number_of_legs: 0,
+            legs,
             confidence: c_route.confidence,
         }
     }
