@@ -362,13 +362,6 @@ impl MatchResult {
                     "inside rsc_osrm: before MatchRoute::new | route: {:?}",
                     &route
                 );
-            }
-
-            for route in routes_vec {
-                println!(
-                    "inside rsc_osrm: before MatchRoute::new | route: {:?}",
-                    &route
-                );
                 routes.push(MatchRoute::new(&route));
                 println!(
                     "inside rsc_osrm: after MatchRoute::new | route: {:?}",
