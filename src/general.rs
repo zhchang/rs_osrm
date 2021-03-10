@@ -31,6 +31,7 @@ impl COsrmCoordinate {
         Coordinate {
             latitude: self.latitude,
             longitude: self.longitude,
+            name: None,
         }
     }
 }

@@ -146,6 +146,7 @@ impl NearestRequest {
             general_options: GeneralOptions::new(&vec![Coordinate {
                 latitude,
                 longitude,
+                name: None
             }]),
             number_of_results: 1,
         }
