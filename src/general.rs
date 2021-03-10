@@ -39,6 +39,7 @@ impl COsrmCoordinate {
 pub struct Coordinate {
     pub latitude: f64,
     pub longitude: f64,
+    pub name: Option<String>,
 }
 
 impl Coordinate {
