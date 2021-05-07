@@ -223,6 +223,15 @@ impl RouteRequest {
         self.overview = val;
         self
     }
+    pub fn annotations(
+        &mut self,
+        annotations: bool,
+        annotations_type: AnnotationsType,
+    ) -> &mut RouteRequest {
+        self.annotations = annotations;
+        self.annotations_type = annotations_type;
+        self
+    }
 
     pub fn run(&mut self, osrm: &Osrm) -> (Status, RouteResult) {
         unsafe {
@@ -253,10 +262,12 @@ mod tests {
             Coordinate {
                 latitude: 1.,
                 longitude: 2.,
+                name: None,
             },
             Coordinate {
                 latitude: 3.,
                 longitude: 4.,
+                name: None,
             },
         ];
         let mut req = RouteRequest::new(&coords);
