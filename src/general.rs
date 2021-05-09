@@ -332,6 +332,12 @@ impl COsrmAnnotation {
             metadata: None,
         };
 
+        // TODO: fix bugs here! (comment by lifu)
+        // bug 1: number_of_coordinates != length of fields like duration.
+        //  instead,   number_of_coordinates - 1 == length of fields like duration
+        // bug 2: currently the c code sets number_of_coordinates only when distance data is present
+        //  however distance data could be null if annotation type is set to be something else, like node
+        //  thus it is wrong to rely on number_of_coordinates size to parse all the fields here
         if self.duration != std::ptr::null_mut() {
             annotation.duration = unsafe {
                 slice::from_raw_parts(self.duration, self.number_of_coordinates as usize).to_vec()
