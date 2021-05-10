@@ -364,7 +364,8 @@ impl COsrmAnnotation {
 
         if self.nodes != std::ptr::null_mut() {
             annotation.nodes = unsafe {
-                slice::from_raw_parts(self.nodes, self.number_of_coordinates as usize).to_vec()
+                slice::from_raw_parts(self.nodes, (self.number_of_coordinates + 1) as usize)
+                    .to_vec()
             };
         }
 
