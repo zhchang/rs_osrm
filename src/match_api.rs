@@ -239,6 +239,16 @@ impl MatchRequest {
         self
     }
 
+    pub fn annotations(
+        &mut self,
+        annotations: bool,
+        annotations_type: AnnotationsType,
+    ) -> &mut MatchRequest {
+        self.annotations = annotations;
+        self.annotations_type = annotations_type;
+        self
+    }
+
     pub fn run(&mut self, osrm: &Osrm) -> (Status, MatchResult) {
         unsafe {
             let mut result: *mut CMatchResult = std::ptr::null_mut();
