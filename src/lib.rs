@@ -257,3 +257,4 @@ impl Drop for Osrm {
 }
 
 unsafe impl Send for Osrm {}
+unsafe impl Sync for Osrm {}
