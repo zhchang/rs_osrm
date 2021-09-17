@@ -304,7 +304,7 @@ impl COsrmMetaData {
 
 #[derive(Debug)]
 pub struct MetaData {
-    datasource_names: Vec<String>,
+    pub datasource_names: Vec<String>,
 }
 
 #[repr(C)]
