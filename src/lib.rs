@@ -241,9 +241,11 @@ impl Osrm {
                 }
             }
 
-            Ok(Osrm {
+            let r = Osrm {
                 config: Box::new((*result).obj),
-            })
+            };
+            println!("osrm created {:p}", r.config);
+            Ok(r)
         }
     }
 }
@@ -251,6 +253,7 @@ impl Osrm {
 impl Drop for Osrm {
     fn drop(&mut self) {
         unsafe {
+            println!("osrm destroyed {:p}", self.config);
             osrm_destroy(*self.config);
         }
     }
