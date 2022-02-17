@@ -229,6 +229,11 @@ impl MatchRequest {
         }
     }
 
+    pub fn steps(&mut self, val: bool) -> &mut MatchRequest {
+        self.steps = val;
+        self
+    }
+
     pub fn radiuses(&mut self, val: &Option<Vec<Option<f64>>>) -> &mut MatchRequest {
         self.general_options.radiuses(val);
         self
