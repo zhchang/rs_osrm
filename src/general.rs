@@ -639,6 +639,11 @@ impl GeneralOptions {
         self.radiuses = val.clone();
         self
     }
+
+    pub fn exclude(&mut self, val: &Option<Vec<String>>) -> &mut GeneralOptions {
+        self.exclude = val.clone();
+        self
+    }
 }
 
 #[repr(C)]
