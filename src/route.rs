@@ -203,6 +203,10 @@ impl RouteRequest {
             waypoints: None,
         }
     }
+    pub fn exclude(&mut self, val: &Option<Vec<String>>) -> &mut RouteRequest {
+        self.general_options.exclude(val);
+        self
+    }
     pub fn steps(&mut self, val: bool) -> &mut RouteRequest {
         self.steps = val;
         self
