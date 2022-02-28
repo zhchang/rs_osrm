@@ -169,7 +169,7 @@ pub(crate) struct COsrmManeuver {
     pub(crate) bearing_after: c_int,
     pub(crate) coordinate: COsrmCoordinate,
     pub(crate) maneuver_type: *const c_char,
-    pub(crate) modifer: *const c_char,
+    pub(crate) modifier: *const c_char,
 }
 
 impl COsrmManeuver {
@@ -179,7 +179,7 @@ impl COsrmManeuver {
             bearing_after: self.bearing_after,
             coordinate: self.coordinate.to_coordinate(),
             maneuver_type: c_string_to_string(self.maneuver_type),
-            modifer: c_string_to_option_string(self.modifer),
+            modifier: c_string_to_option_string(self.modifier),
         }
     }
 }
@@ -190,7 +190,7 @@ pub struct Maneuver {
     pub bearing_after: i32,
     pub coordinate: Coordinate,
     pub maneuver_type: String,
-    pub modifer: Option<String>,
+    pub modifier: Option<String>,
 }
 
 #[repr(C)]
