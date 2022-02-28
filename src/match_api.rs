@@ -229,6 +229,16 @@ impl MatchRequest {
         }
     }
 
+    pub fn skip_waypoints(&mut self, val: bool) -> &mut MatchRequest {
+        self.general_options.skip_waypoints(val);
+        self
+    }
+
+    pub fn waypoints(&mut self, val: &Option<Vec<i32>>) -> &mut MatchRequest {
+        self.waypoints = val.clone();
+        self
+    }
+
     pub fn steps(&mut self, val: bool) -> &mut MatchRequest {
         self.steps = val;
         self
