@@ -208,14 +208,12 @@ impl RouteRequest {
     pub fn approach(&mut self, val: Vec<&str>) -> &mut RouteRequest {
         let mut approaches: Vec<Option<Approach>> = Vec::new();
         for v in val {
-            if v == "" {
-                approaches.push(None);
-            } else if v == "unrestricted" {
+            if v == "unrestricted" {
                 approaches.push(Option::Some(Approach::UNRESTRICTED));
             } else if v == "curb" {
                 approaches.push(Option::Some(Approach::CURB));
             } else {
-                panic!("Invalid approach type {}", v);
+                approaches.push(None);
             }
         }
         
