@@ -1,3 +1,4 @@
+use crate::general::Approach;
 use crate::general::COsrmRoute;
 use crate::general::Coordinate;
 use crate::general::Route;
@@ -203,6 +204,12 @@ impl RouteRequest {
             waypoints: None,
         }
     }
+    
+    pub fn approach(&mut self, val: Option<Vec<Option<Approach>>>) -> &mut RouteRequest {
+        self.general_options.approach = val;
+        self
+    }
+
     pub fn exclude(&mut self, val: &Option<Vec<String>>) -> &mut RouteRequest {
         self.general_options.exclude(val);
         self
