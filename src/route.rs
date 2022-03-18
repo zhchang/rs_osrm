@@ -1,3 +1,4 @@
+use crate::general::Approach;
 use crate::general::COsrmRoute;
 use crate::general::Coordinate;
 use crate::general::Route;
@@ -203,6 +204,25 @@ impl RouteRequest {
             waypoints: None,
         }
     }
+    
+    pub fn approach(&mut self, val: Vec<&str>) -> &mut RouteRequest {
+        let mut approaches: Vec<Option<Approach>> = Vec::new();
+        for v in val {
+            if v == "" {
+                approaches.push(None);
+            } else if v == "unrestricted" {
+                approaches.push(Option::Some(Approach::UNRESTRICTED));
+            } else if v == "curb" {
+                approaches.push(Option::Some(Approach::CURB));
+            } else {
+                panic!("Invalid approach type {}", v);
+            }
+        }
+        
+        self.general_options.approach = Option::Some(approaches);
+        self
+    }
+
     pub fn exclude(&mut self, val: &Option<Vec<String>>) -> &mut RouteRequest {
         self.general_options.exclude(val);
         self
