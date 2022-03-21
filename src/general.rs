@@ -170,6 +170,7 @@ pub(crate) struct COsrmManeuver {
     pub(crate) coordinate: COsrmCoordinate,
     pub(crate) maneuver_type: *const c_char,
     pub(crate) modifier: *const c_char,
+    pub(crate) exit: c_int,
 }
 
 impl COsrmManeuver {
@@ -180,6 +181,7 @@ impl COsrmManeuver {
             coordinate: self.coordinate.to_coordinate(),
             maneuver_type: c_string_to_string(self.maneuver_type),
             modifier: c_string_to_option_string(self.modifier),
+            exit: self.exit,
         }
     }
 }
@@ -191,6 +193,7 @@ pub struct Maneuver {
     pub coordinate: Coordinate,
     pub maneuver_type: String,
     pub modifier: Option<String>,
+    pub exit: i32,
 }
 
 #[repr(C)]
@@ -203,6 +206,7 @@ pub(crate) struct COsrmStep {
     pub(crate) name: *const c_char,
     pub(crate) reference: *const c_char,
     pub(crate) pronunciation: *const c_char,
+    pub(crate) destinations: *const c_char,
     pub(crate) exits: *const c_char,
     pub(crate) mode: *const c_char,
     pub(crate) metadata: *const COsrmManeuver,
@@ -223,6 +227,7 @@ impl COsrmStep {
             name: c_string_to_option_string(self.name),
             reference: c_string_to_option_string(self.reference),
             pronunciation: c_string_to_option_string(self.pronunciation),
+            destinations: c_string_to_option_string(self.destinations),
             exits: c_string_to_option_string(self.exits),
             mode: c_string_to_option_string(self.exits),
             metadata: None,
@@ -260,6 +265,7 @@ pub struct Step {
     pub name: Option<String>,
     pub reference: Option<String>,
     pub pronunciation: Option<String>,
+    pub destinations: Option<String>,
     pub exits: Option<String>,
     pub mode: Option<String>,
     pub metadata: Option<Maneuver>,
