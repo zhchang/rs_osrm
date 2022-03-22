@@ -561,8 +561,18 @@ impl CGeneralOptions {
                 c_hint_vec.push(CString::new(hint.clone()).unwrap());
             }
             option.c_hints = Option::from(c_hint_vec);
+            option.c_hints_ptr = Some(
+                option
+                    .c_hints
+                    .as_ref()
+                    .clone()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_ptr())
+                    .collect::<Vec<_>>(),
+            );
             general_c_option.hints =
-                option.c_hints.as_ref().unwrap().as_ptr() as *const *const c_char;
+                option.c_hints_ptr.as_ref().unwrap().as_ptr() as *const *const c_char;
         }
 
         if option.approach.is_some() {
@@ -588,8 +598,18 @@ impl CGeneralOptions {
                 c_exclude_vec.push(CString::new(exclude.clone()).unwrap());
             }
             option.c_exclude = Option::from(c_exclude_vec);
+            option.c_exclude_ptr = Some(
+                option
+                    .c_exclude
+                    .as_ref()
+                    .clone()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_ptr())
+                    .collect::<Vec<_>>(),
+            );
             general_c_option.exclude =
-                option.c_exclude.as_ref().unwrap().as_ptr() as *const *const c_char;
+                option.c_exclude_ptr.as_ref().unwrap().as_ptr() as *const *const c_char;
             general_c_option.number_of_excludes = option.exclude.as_ref().unwrap().len() as c_int;
         }
 
@@ -609,10 +629,12 @@ pub struct GeneralOptions {
     pub skip_waypoints: bool,
     pub hints: Option<Vec<String>>,
     pub(crate) c_hints: Option<Vec<CString>>,
+    pub(crate) c_hints_ptr: Option<Vec<*const c_char>>,
     pub approach: Option<Vec<Option<Approach>>>,
     pub(crate) approach_t: Vec<*const Approach>,
     pub exclude: Option<Vec<String>>,
     pub(crate) c_exclude: Option<Vec<CString>>,
+    pub(crate) c_exclude_ptr: Option<Vec<*const c_char>>,
 }
 
 impl GeneralOptions {
@@ -628,10 +650,12 @@ impl GeneralOptions {
             skip_waypoints: false,
             hints: None,
             c_hints: None,
+            c_hints_ptr: None,
             approach: None,
             approach_t: vec![],
             exclude: None,
             c_exclude: None,
+            c_exclude_ptr: None,
         }
     }
 
