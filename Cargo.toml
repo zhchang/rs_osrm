@@ -1,6 +1,6 @@
 [package]
 name = "rsc_osrm"
-version = "0.1.30"
+version = "0.1.31"
 license = "MIT"
 authors = ["Chang Zhao <zhchang@gmail.com>"]
 edition = "2018"
